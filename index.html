@@ -1,0 +1,235 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADPG - Live Monitoring Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="topbar">
+        <div>
+            <h1>ADPG <span>MONITOR</span></h1>
+            <p>Adaptive Power Generation System</p>
+        </div>
+
+        <div class="connection is-disconnected" id="connectionIndicator" role="status" aria-live="polite">
+            <span id="statusDot" class="status-dot offline"></span>
+            <span id="connectionStatus">ESP32 Disconnected</span>
+        </div>
+    </header>
+
+    <nav class="main-nav" aria-label="Dashboard navigation">
+        <a href="#overview" data-section="overview">Overview</a>
+        <a href="#monitoring" data-section="monitoring" data-mode="live" aria-current="page">Live Monitoring</a>
+        <a href="#monitoring" data-section="monitoring" data-mode="demo">Demo Mode</a>
+        <a href="#analytics" data-section="analytics">Analytics</a>
+    </nav>
+
+    <main class="container">
+
+        <section class="overview" id="overview">
+            <div>
+                <p class="eyebrow">SYSTEM OVERVIEW</p>
+                <h2 id="viewTitle">Live Monitoring</h2>
+                <p id="modeDescription" class="muted">Real-time sensor data from ESP32</p>
+            </div>
+
+            <div class="system-info">
+                <span>ESP32 IP</span>
+                <strong id="espIp">10.61.177.10</strong>
+                <span id="lastUpdated">Waiting for data...</span>
+            </div>
+        </section>
+
+        <section class="mode-toolbar" aria-label="Operating mode">
+            <div class="mode-indicator" id="modeIndicator" hidden>DEMO MODE · SIMULATED DATA</div>
+            <div class="mode-controls">
+                <button type="button" class="mode-button is-active" data-mode="live" aria-pressed="true">Live Data</button>
+                <button type="button" class="mode-button" data-mode="demo" aria-pressed="false">Demo Data</button>
+            </div>
+        </section>
+
+        <section class="section" id="monitoring">
+            <h3>Generator Monitoring</h3>
+            <div class="grid">
+                <div class="metric-card">
+                    <p>RPM</p>
+                    <h2 id="rpm">--</h2>
+                    <small>Revolutions per minute</small>
+                </div>
+
+                <div class="metric-card">
+                    <p>Generator Voltage</p>
+                    <h2 id="generator_voltage">--</h2>
+                    <small>Volts (V)</small>
+                </div>
+
+                <div class="metric-card">
+                    <p>Generator Current</p>
+                    <h2 id="generator_current">--</h2>
+                    <small>Milliamps (mA)</small>
+                </div>
+
+                <div class="metric-card">
+                    <p>Generator Power</p>
+                    <h2 id="generator_power">--</h2>
+                    <small>Milliwatts (mW)</small>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h3>Battery Monitoring</h3>
+            <div class="grid">
+                <div class="metric-card">
+                    <p>Battery Voltage</p>
+                    <h2 id="battery_voltage">--</h2>
+                    <small>Volts (V)</small>
+                </div>
+
+                <div class="metric-card">
+                    <p>Battery Current</p>
+                    <h2 id="battery_current">--</h2>
+                    <small>Milliamps (mA)</small>
+                </div>
+
+                <div class="metric-card">
+                    <p>Battery Power</p>
+                    <h2 id="battery_power">--</h2>
+                    <small>Milliwatts (mW)</small>
+                </div>
+
+                <div class="metric-card">
+                    <p>Battery Status</p>
+                    <h2 id="battery_status" class="status-value">--</h2>
+                    <small>Charging / Discharging / Error</small>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h3>Phone Output Monitoring</h3>
+            <div class="grid">
+                <div class="metric-card">
+                    <p>Phone Voltage</p>
+                    <h2 id="phone_voltage">--</h2>
+                    <small>Volts (V)</small>
+                </div>
+
+                <div class="metric-card">
+                    <p>Phone Current</p>
+                    <h2 id="phone_current">--</h2>
+                    <small>Milliamps (mA)</small>
+                </div>
+
+                <div class="metric-card">
+                    <p>Phone Power</p>
+                    <h2 id="phone_power">--</h2>
+                    <small>Milliwatts (mW)</small>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h3>Temperature Monitoring</h3>
+            <div class="grid">
+                <div class="metric-card">
+                    <p>Battery Temperature</p>
+                    <h2 id="battery_temp">--</h2>
+                    <small>°C</small>
+                </div>
+
+                <div class="metric-card">
+                    <p>Tower Bottom Temperature</p>
+                    <h2 id="bottom_temp">--</h2>
+                    <small>°C</small>
+                </div>
+
+                <div class="metric-card">
+                    <p>Tower Top Temperature</p>
+                    <h2 id="top_temp">--</h2>
+                    <small>°C</small>
+                </div>
+
+                <div class="metric-card">
+                    <p>Temperature Difference</p>
+                    <h2 id="temperature_difference">--</h2>
+                    <small>°C</small>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h3>Pressure Monitoring</h3>
+            <div class="grid">
+                <div class="metric-card">
+                    <p>Pressure</p>
+                    <h2 id="pressure">--</h2>
+                    <small>Pa (as returned by ESP32)</small>
+                </div>
+
+                <div class="metric-card">
+                    <p>SDP810 Pressure Sensor Temperature</p>
+                    <h2 id="pressure_temperature">--</h2>
+                    <small>°C</small>
+                </div>
+
+                <div class="metric-card">
+                    <p>ESP32 Uptime</p>
+                    <h2 id="time_ms">--</h2>
+                    <small>Milliseconds</small>
+                </div>
+            </div>
+        </section>
+
+        <section class="section analytics-section" id="analytics">
+            <div class="section-heading">
+                <div>
+                    <h3>Real-Time Analytics</h3>
+                    <p class="muted">Latest 60 readings · <span id="chartModeLabel">Live</span> mode</p>
+                </div>
+                <button type="button" id="downloadCsv" class="download-button">Download CSV</button>
+            </div>
+
+            <div class="chart-grid">
+                <article class="chart-card">
+                    <h4>Turbine RPM vs Time</h4>
+                    <div class="chart-container"><canvas id="rpmChart" aria-label="Turbine RPM over time"></canvas></div>
+                </article>
+                <article class="chart-card">
+                    <h4>Battery Voltage vs Time</h4>
+                    <div class="chart-container"><canvas id="batteryVoltageChart" aria-label="Battery voltage over time"></canvas></div>
+                </article>
+                <article class="chart-card">
+                    <h4>Battery Current vs Time</h4>
+                    <div class="chart-container"><canvas id="batteryCurrentChart" aria-label="Battery current over time"></canvas></div>
+                </article>
+                <article class="chart-card">
+                    <h4>Phone Charging Current vs Time</h4>
+                    <div class="chart-container"><canvas id="phoneCurrentChart" aria-label="Phone charging current over time"></canvas></div>
+                </article>
+                <article class="chart-card">
+                    <h4>Phone Charging Power vs Time</h4>
+                    <div class="chart-container"><canvas id="phonePowerChart" aria-label="Phone charging power over time"></canvas></div>
+                </article>
+                <article class="chart-card">
+                    <h4>Temperature vs Time</h4>
+                    <div class="chart-container"><canvas id="temperatureChart" aria-label="Battery, top and bottom temperatures over time"></canvas></div>
+                </article>
+            </div>
+        </section>
+
+        <footer>
+            <p>ADPG Monitoring System | ESP32 Live Data</p>
+            <p id="errorMessage">Waiting for ESP32 connection...</p>
+        </footer>
+
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
